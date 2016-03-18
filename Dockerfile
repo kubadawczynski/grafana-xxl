@@ -25,7 +25,7 @@ RUN \
   git clone https://github.com/alexanderzobnin/grafana-zabbix /tmp/grafana-zabbix && \
   mv /tmp/grafana-zabbix/zabbix/ /usr/share/grafana/public/app/plugins/datasource/ && \
   rm -rf /tmp/grafana-zabbix/ && \
-  ### dataloop - not 3.0 ### && \
+  ### dataloop - NOT 3.0 READY ### && \
   #git clone https://github.com/dataloop/grafana-plugin /usr/share/grafana/public/app/plugins/datasource/dataloop && \
   #rm -rf /usr/share/grafana/public/app/plugins/datasource/dataloop/.git && \
   ### atlas atsd bosun clouderamanager druid gnocchi ### && \
@@ -45,13 +45,13 @@ RUN \
   git clone https://github.com/dalmatinerdb/dalmatiner-grafana-plugin /tmp/dalmatiner-grafana-plugin && \
   mv /tmp/dalmatiner-grafana-plugin/dalmatinerdb/ /usr/share/grafana/public/app/plugins/datasource/ && \
   rm -rf /tmp/dalmatiner-grafana-plugin && \
-  ### opennms && \
-  echo "deb http://debian.opennms.org opennms-17 main\ndeb-src http://debian.opennms.org opennms-17 main" > /etc/apt/sources.list.d/opennms.list && \
-  curl -s https://debian.opennms.org/OPENNMS-GPG-KEY | apt-key add - && \   
-  sleep 10 && \
-  apt-get update && \
-  apt-get install -y grafana-opennms-plugin && \
-  rm -rf /etc/apt/sources.list.d/opennms.list && \
+  ### opennms - NOT 3.0 READY && \
+  #echo "deb http://debian.opennms.org opennms-17 main\ndeb-src http://debian.opennms.org opennms-17 main" > /etc/apt/sources.list.d/opennms.list && \
+  #curl -s https://debian.opennms.org/OPENNMS-GPG-KEY | apt-key add - && \   
+  #sleep 10 && \
+  #apt-get update && \
+  #apt-get install -y grafana-opennms-plugin && \
+  #rm -rf /etc/apt/sources.list.d/opennms.list && \
   ### kairosdb ### && \
   #git clone https://github.com/br0th3r/grafana2-kairosdb-datasource-plugin /tmp/grafana2-kairosdb-datasource-plugin && \
   #mv /tmp/grafana2-kairosdb-datasource-plugin/kairosdb/ /usr/share/grafana/public/app/plugins/datasource/ && \
