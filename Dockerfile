@@ -5,7 +5,7 @@ MAINTAINER Jan Garaj info@monitoringartist.com
 # cloudwatch elasticsearch grafana graphite influxdb mixed opentsdb prometheus
 # sql kairosdb
 
-ENV GRAFANA_VERSION 2.6.0
+ENV GRAFANA_VERSION 3.0.0-pre1   
 
 COPY ./run.sh /run.sh
 
@@ -17,17 +17,17 @@ RUN \
   rm /tmp/grafana.deb && \
   curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /usr/sbin/gosu && \
   chmod +x /usr/sbin/gosu && \
-  ### plugin pie chart - ignored in 2.6 ###
-  #git clone https://github.com/grafana/panel-plugin-piechart.git /usr/local/src/panel-plugin-piechart && \
-  #echo '[plugin.piechart]' >> /etc/grafana/grafana.ini && \
-  #echo 'path = /usr/local/src/panel-plugin-piechart' >> /etc/grafana/grafana.ini && \
+  ### plugin pie chart ###
+  git clone https://github.com/grafana/panel-plugin-piechart /usr/local/src/panel-plugin-piechart && \
+  echo '[plugin.piechart]' >> /etc/grafana/grafana.ini && \
+  echo 'path = /usr/local/src/panel-plugin-piechart' >> /etc/grafana/grafana.ini && \
   ### zabbix ### && \
   git clone https://github.com/alexanderzobnin/grafana-zabbix /tmp/grafana-zabbix && \
   mv /tmp/grafana-zabbix/zabbix/ /usr/share/grafana/public/app/plugins/datasource/ && \
   rm -rf /tmp/grafana-zabbix/ && \
-  ### dataloop ### && \
-  git clone https://github.com/dataloop/grafana-plugin /usr/share/grafana/public/app/plugins/datasource/dataloop && \
-  rm -rf /usr/share/grafana/public/app/plugins/datasource/dataloop/.git && \
+  ### dataloop - not 3.0 ### && \
+  #git clone https://github.com/dataloop/grafana-plugin /usr/share/grafana/public/app/plugins/datasource/dataloop && \
+  #rm -rf /usr/share/grafana/public/app/plugins/datasource/dataloop/.git && \
   ### atlas atsd bosun clouderamanager druid gnocchi ### && \
   git clone https://github.com/grafana/grafana-plugins /tmp/grafana-plugins && \
   rm -rf /tmp/grafana-plugins/datasources/zabbix && \
