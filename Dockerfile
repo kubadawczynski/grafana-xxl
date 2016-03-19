@@ -11,7 +11,7 @@ COPY ./run.sh /run.sh
 
 RUN \
   apt-get update && \
-  apt-get -y --no-install-recommends install libfontconfig curl ca-certificates git && \
+  apt-get -y --force-yes --no-install-recommends install libfontconfig curl ca-certificates git && \
   curl https://grafanarel.s3.amazonaws.com/builds/grafana_${GRAFANA_VERSION}_amd64.deb > /tmp/grafana.deb && \
   dpkg -i /tmp/grafana.deb && \
   rm /tmp/grafana.deb && \
@@ -29,8 +29,8 @@ RUN \
   # grafana-cli install <plugin-id> && \
   mkdir -p /usr/share/grafana-plugins && \    
   ### zabbix ### && \
-  git clone -b develop https://github.com/alexanderzobnin/grafana-zabbix /tmp/grafana-zabbix && \
-  cp -r /tmp/grafana-zabbix/plugins/* /usr/share/grafana-plugins && \
+  git clone -b develop https://github.com/jangaraj/grafana-zabbix /tmp/grafana-zabbix && \
+  cp -r /tmp/grafana-zabbix/src/* /usr/share/grafana-plugins && \
   #mkdir -p /usr/share/grafana/public/app/plugins/datasource/zabbix && \
   #mkdir -p /usr/share/grafana/public/app/plugins/panel/zabbix && \
   #mv /tmp/grafana-zabbix/plugins/datasource-zabbix/* /usr/share/grafana/public/app/plugins/datasource/zabbix/ && \
@@ -44,7 +44,7 @@ RUN \
   git clone https://github.com/grafana/example-app /usr/share/grafana-plugins/example-app && \
   git clone https://github.com/grafana/simple-json-datasource /usr/share/grafana-plugins/simple-json-datasource && \
   git clone https://github.com/raintank/snap-app /usr/share/grafana-plugins/snap-app && \
-  git clone https://github.com/raintank/gitstats-app /usr/share/grafana-plugins/gitstats-app && \    
+  #git clone https://github.com/raintank/gitstats-app /usr/share/grafana-plugins/gitstats-app && \    
   ### dataloop - NOT 3.0 READY ### && \
   #git clone https://github.com/dataloop/grafana-plugin /usr/share/grafana/public/app/plugins/datasource/dataloop && \
   #rm -rf /usr/share/grafana/public/app/plugins/datasource/dataloop/.git && \
@@ -90,8 +90,8 @@ RUN \
   sed -i 's#icon-gf-grafana_wordmark"></i>#icon-gf-grafana_wordmark"> XXL</i>#g' /usr/share/grafana/public/app/partials/login.html && \
   sed -i 's#icon-gf-grafana_wordmark"></i>#icon-gf-grafana_wordmark"> XXL</i>#g' /usr/share/grafana/public/app/partials/reset_password.html && \
   chmod +x /run.sh && \
-  apt-get remove -y curl git && \
-  apt-get autoremove -y && \
+  apt-get remove -y --force-yes curl git && \
+  apt-get autoremove -y --force-yes && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*  
 
