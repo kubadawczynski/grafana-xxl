@@ -36,10 +36,8 @@ RUN \
   #mv /tmp/grafana-zabbix/plugins/datasource-zabbix/* /usr/share/grafana/public/app/plugins/datasource/zabbix/ && \
   #mv /tmp/grafana-zabbix/plugins/panel-triggers/* /usr/share/grafana/public/app/plugins/panel/zabbix/ && \
   rm -rf /tmp/grafana-zabbix/ && \
-  ### plugin pie chart ### && \
-  #mkdir -p /usr/share/grafana/public/app/plugins/panel/piechart && \
-  #git clone https://github.com/grafana/piechart-panel /usr/share/grafana/public/app/plugins/panel/piechart && \
-  git clone https://github.com/grafana/piechart-panel/usr/share/grafana-plugins/piechart-panel && \
+  ### others plugins from GitHub ### && \
+  git clone https://github.com/grafana/piechart-panel /usr/share/grafana-plugins/piechart-panel && \
   git clone https://github.com/grafana/influxdb-08-datasource /usr/share/grafana-plugins/influxdb-08-datasource && \
   git clone https://github.com/grafana/kairosdb-datasource /usr/share/grafana-plugins/kairosdb-datasource && \
   git clone https://github.com/raintank/worldping-app /usr/share/grafana-plugins/worldping-app && \
