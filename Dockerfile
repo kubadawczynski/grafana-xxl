@@ -30,7 +30,7 @@ RUN \
   mkdir -p /usr/share/grafana-plugins && \    
   ### zabbix ### && \
   git clone -b develop https://github.com/jangaraj/grafana-zabbix /tmp/grafana-zabbix && \
-  cp -r /tmp/grafana-zabbix/src/* /usr/share/grafana-plugins && \
+  cp -r /tmp/grafana-zabbix/plugins/* /usr/share/grafana-plugins && \
   #mkdir -p /usr/share/grafana/public/app/plugins/datasource/zabbix && \
   #mkdir -p /usr/share/grafana/public/app/plugins/panel/zabbix && \
   #mv /tmp/grafana-zabbix/plugins/datasource-zabbix/* /usr/share/grafana/public/app/plugins/datasource/zabbix/ && \
