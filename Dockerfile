@@ -1,12 +1,10 @@
 FROM debian:jessie
 MAINTAINER Jan Garaj info@monitoringartist.com
 
-# inbuilt datasources:
-# cloudwatch elasticsearch grafana graphite influxdb mixed opentsdb prometheus
-# sql kairosdb
-
-ENV GRAFANA_VERSION 3.0.0-beta11459429091
-
+ENV \
+  GRAFANA_VERSION=3.0.0-beta11459429091 \
+  GF_PATH_PLUGINS=/grafana-plugins
+  
 COPY ./run.sh /run.sh
 
 RUN \
@@ -17,9 +15,11 @@ RUN \
   rm /tmp/grafana.deb && \
   curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /usr/sbin/gosu && \
   chmod +x /usr/sbin/gosu && \
-  for plugin in $(curl -s https://grafana.net/api/plugins?orderBy=name | jq '.items[] | select(.internal=='false') | .slug' | tr -d '"'); do grafana-cli plugins install $plugin; done && \
+  for plugin in $(curl -s https://grafana.net/api/plugins?orderBy=name | jq '.items[] | select(.internal=='false') | .slug' | tr -d '"'); do grafana-cli --pluginsDir "${GF_PATH_PLUGINS}" plugins install $plugin; done && \
   ### zabbix ### && \
-  git clone -b v3.0.0-beta1 https://github.com/alexanderzobnin/grafana-zabbix /var/lib/grafana/plugins/zabbix-app && \
+  git clone -b v3.0.0-beta1 https://github.com/alexanderzobnin/grafana-zabbix $GF_PATH_PLUGINS/zabbix-app && \
+  ### aion && \
+  git clone https://github.com/FlukeNetworks/grafana-datasource-aion  $GF_PATH_PLUGINS/aion && \
   ### branding && \
   sed -i 's#<title>Grafana</title>#<title>Grafana XXL</title>#g' /usr/share/grafana/public/views/index.html && \
   sed -i 's#<title>Grafana</title>#<title>Grafana XXL</title>#g' /usr/share/grafana/public/views/500.html && \

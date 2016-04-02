@@ -27,7 +27,7 @@ fi
 
 # upgrade all installed plugins
 if [ ! -z ${UPGRADEALL} ]; then
-    grafana-cli plugins upgrade-all
+    grafana-cli --pluginsDir "${GF_PATH_PLUGINS}" plugins upgrade-all || true
 fi
 
 exec gosu grafana /usr/sbin/grafana-server \
@@ -35,4 +35,4 @@ exec gosu grafana /usr/sbin/grafana-server \
   --config=/etc/grafana/grafana.ini        \
   cfg:default.paths.data=/var/lib/grafana  \
   cfg:default.paths.logs=/var/log/grafana  \
-  cfg:default.paths.plugins=/var/lib/grafana/plugins
+  cfg:default.paths.plugins=${GF_PATH_PLUGINS}
