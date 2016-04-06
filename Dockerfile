@@ -16,8 +16,6 @@ RUN \
   curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /usr/sbin/gosu && \
   chmod +x /usr/sbin/gosu && \
   for plugin in $(curl -s https://grafana.net/api/plugins?orderBy=name | jq '.items[] | select(.internal=='false') | .slug' | tr -d '"'); do grafana-cli --pluginsDir "${GF_PATH_PLUGINS}" plugins install $plugin; done && \
-  ### zabbix ### && \
-  git clone https://github.com/alexanderzobnin/grafana-zabbix-app $GF_PATH_PLUGINS/zabbix-app  && \
   ### openms ### && \
   git clone https://github.com/j-white/grafana-opennms-datasource $GF_PATH_PLUGINS/openms-datasource && \  
   ### aion && \
