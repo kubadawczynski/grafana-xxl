@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
-  GRAFANA_VERSION=3.0.0-beta11459429091 \
+  GRAFANA_VERSION=3.0.0-beta41460581169 \
   GF_PATH_PLUGINS=/grafana-plugins
   
 COPY ./run.sh /run.sh
