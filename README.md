@@ -1,15 +1,8 @@
 # Grafana XXL [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/grafana-xxl)
 
-**Hot tip: [branch 3.0](https://github.com/monitoringartist/grafana-xxl/tree/3.0)
-contains dev preview of Grafana 3.0 with some supported plugins, panels and apps.** 
+Official Grafana with all preinstalled plugins from https://grafana.net/plugins.
 
-Official Grafana with unofficial plugins: Zabbix, DalmatinerDB, Bosun,
-Cloudera Manager, OpenNMS, Druid, Atsd, Chnocchi, PRTG, Ambari, ...
-
-Official inbuilt plugins: Graphite, InfluxDB, OpenTSDB, CloudWatch,
-Elasticsearch, Grafana, Prometheus, SQL, KairosDB.
-
-![Grafana XXL datasources](https://raw.githubusercontent.com/monitoringartist/grafana-xxl/master/doc/grafana-xxl-datasources.png)
+![Grafana XXL datasources and plugins](https://raw.githubusercontent.com/monitoringartist/grafana-xxl/master/doc/grafana-xxl-datasources-plugins.png)
 
 Please donate to author, so he can continue to publish another awesome projects
 for free:
@@ -20,7 +13,7 @@ for free:
 
 Start your image binding the external port 3000:
 
-    docker run -d --name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl
+    docker run -d --name=grafana-xxl -p 3000:3000 monitoringartist/grafana-xxl:latest
 
 Try it out, default admin user is admin/admin.
 
@@ -35,16 +28,16 @@ Try it out, default admin user is admin/admin.
       -p 3000:3000 \
       --name grafana-xxl \
       --volumes-from grafana-xxl-storage \
-      monitoringartist/grafana-xxl
+      monitoringartist/grafana-xxl:latest
 
 ## Running specific version of Grafana XXL
 
-    # specify right tag, e.g. 2.6.0 - see Docker Hub for available tags
+    # specify right tag, e.g. 2.6,3.1,dev (latest nigthly build) - see Docker Hub for available tags
     docker run \
       -d \
       -p 3000:3000 \
       --name grafana-xxl \
-      monitoringartist/grafana-xxl:2.6.0
+      monitoringartist/grafana-xxl:dev
       
 ## Configuring your Grafana container
 
@@ -57,40 +50,52 @@ variables, for example:
       --name=grafana-xxl \
       -e "GF_SERVER_ROOT_URL=http://grafana.server.name" \
       -e "GF_SECURITY_ADMIN_PASSWORD=secret" \
-      monitoringartist/grafana-xxl
+      monitoringartist/grafana-xxl:latest
+
+## Configuring AWS credentials for CloudWatch support (only Grafana 3.+)
+
+    docker run \
+      -d \
+      -p 3000:3000 \
+      --name=grafana-xxl \
+      -e "GF_AWS_PROFILES=default" \
+      -e "GF_AWS_default_ACCESS_KEY_ID=YOUR_ACCESS_KEY" \
+      -e "GF_AWS_default_SECRET_ACCESS_KEY=YOUR_SECRET_KEY" \
+      -e "GF_AWS_default_REGION=eu-west-1" \
+      monitoringartist/grafana-xxl:latest
+
+You may also specify multiple profiles to `GF_AWS_PROFILES` (e.g.
+`GF_AWS_PROFILES=default another`).
+
+Supported variables:
+
+- `GF_AWS_PROFILES`: list of AWS profiles for Cloudwatch datasource
+- `GF_AWS_${profile}_ACCESS_KEY_ID`: AWS access key ID (required).
+- `GF_AWS_${profile}_SECRET_ACCESS_KEY`: AWS secret access  key (required).
+- `GF_AWS_${profile}_REGION`: AWS region (optional).
+
+## Auto upgrade plugins
+
+Container tries to upgrade all installed plugins in the container automatically before Grafana start. If you want to disable this behaviour, please use environment variable `-e UPGRADEALL=false`.
       
-# Included plugins
-
-See plugin projects also for documentation:
-
-- [Zabbix](https://github.com/alexanderzobnin/grafana-zabbix)
-- [Dataloop](https://github.com/dataloop/grafana-plugin)
-- [DalmatinerDB](https://github.com/dalmatinerdb/dalmatiner-grafana-plugin)
-- [Atsd, Bosun, Cloudera Manager, Druid, Gnocchi](https://github.com/grafana/grafana-plugins)
-- [PRTG](https://github.com/neuralfraud/grafana-prtg)
-- [Ambari](https://github.com/u39kun/ambari-grafana)
-- [OpenNMS](https://github.com/OpenNMS/grafana)
-
-Please report any plugin issues directly to the author.
-
 ## Supported monitoring services
  
 - [Hawkular](http://www.hawkular.org/docs/components/metrics/grafana_integration.html)
 - [Raintank](http://raintank.io/docs/litmus/raintank-datasource/)
 
-Integrations
-============
+# Integrations
 
 * [Puppet for dockerized grafana-xxl](https://github.com/monitoringartist/grafana-xxl/blob/master/puppet.md)
 * [Ansible for dockerized grafana-xxl](https://github.com/monitoringartist/grafana-xxl/blob/master/ansible.md)
 * [docker-compose for dockerized grafana-xxl](https://github.com/monitoringartist/grafana-xxl/blob/master/docker-compose.yml)
 
 
-# Author
+#  Author
 
-[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring'), who loves monitoring
-systems, which start with letter Z. Those are Zabbix and Zenoss.
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss.
 
-Professional monitoring services:
+Professional devops / monitoring services:
 
-[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring')
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)]
+(http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring')
